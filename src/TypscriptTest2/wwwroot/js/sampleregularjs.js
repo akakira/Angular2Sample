@@ -1,0 +1,1 @@
+﻿var badglobal = "Bad global, bad!";
