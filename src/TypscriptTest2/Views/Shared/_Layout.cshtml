@@ -14,6 +14,7 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+    @RenderSection("head",false)
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -63,6 +64,6 @@
         <script src="~/lib/angular2/http.min.js"></script>
     </environment>
 
-    @RenderSection("scripts", required: false)
+    @RenderSection("scripts", false)
 </body>
 </html>
