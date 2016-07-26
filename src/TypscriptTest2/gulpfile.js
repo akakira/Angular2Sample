@@ -1,4 +1,4 @@
-/// <binding BeforeBuild='min' Clean='clean, clean:js, clean:css' />
+/// <binding BeforeBuild='min' Clean='clean, clean:js, clean:css' ProjectOpened='firstapp:watch' />
 //"use strict";
 
 var gulp = require("gulp"), 
@@ -53,11 +53,9 @@ gulp.task("firstapp:min", function () {
       .pipe(gulp.dest("./wwwroot/js/apps"));
 });
 
-//we don't want to push a node folder to prod, but it has the best source for angular2 this should only be run when you update angular2. 
-gulp.task("setupAngular2", function () {
-    return gulp.src(paths.nodeangular)
-    .pipe(debug({ title: "Angular Lib" }))
-    .pipe(gulp.dest(paths.angulardest));
+gulp.task("firstapp:watch", function () {
+    var watcher = gulp.watch([paths.tsapps + "FirstApp/**/*.js"], ['firstapp:min'])
+    watcher.on('change', function (event) { console.log('File ' + event.path + ' was ' + event.type + ', building firstapp'); })
 });
 
 gulp.task("min", ["min:js", "min:css","firstapp:min"]);

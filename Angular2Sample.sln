@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		global.json = global.json
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "TypescriptSample", "src\TypscriptTest2\TypescriptSample.xproj", "{FD273A44-D6BC-4DD9-AD9F-0B08F8A6AECB}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Angular2Sample", "src\TypscriptTest2\Angular2Sample.xproj", "{FD273A44-D6BC-4DD9-AD9F-0B08F8A6AECB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

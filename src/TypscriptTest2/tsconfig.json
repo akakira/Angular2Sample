@@ -1,13 +1,20 @@
 {
-  //"compilerOptions": {
-  //  "noImplicitAny": false,
-  //  "noEmitOnError": true,
-  //  "removeComments": false,
-  //  "sourceMap": true,
-  //  "target": "es5"
-  //},
-  //"exclude": [
-  //  "node_modules",
-  //  "wwwroot"
-  //]
+  "compileOnSave": true,
+  "compilerOptions": {
+    "watch": true,
+    "module": "system",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "es5",
+    "experimentalDecorators": true
+    //,"outDir": "wwwroot/js/apps/" //if you don't want to use gulp/grunt to uglify and move packages.
+  },
+  "exclude": [
+    "node_modules",
+    "wwwroot"
+  ]
 }
