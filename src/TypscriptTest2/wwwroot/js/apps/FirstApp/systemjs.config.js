@@ -12,7 +12,7 @@
     };
     // packages tells the System loader how to load when no filename and/or no extension
     var packages = {
-        'app': { main: 'app.min.js', defaultExtension: 'js' },
+        'app': { main: 'main.js', defaultExtension: 'js' },
         'rxjs': { defaultExtension: 'js' },
         'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
     };
@@ -30,11 +30,11 @@
     ];
     // Individual files (~300 requests):
     function packIndex(pkgName) {
-        packages['@angular/' + pkgName] = { main: 'index.js', defaultExtension: 'js' };
+        packages['angular2/' + pkgName] = { main: 'index.js', defaultExtension: 'js' };
     }
     // Bundled (~40 requests):
     function packUmd(pkgName) {
-        packages['@angular/' + pkgName] = { main: '/bundles/' + pkgName + '.umd.js', defaultExtension: 'js' };
+        packages['angular2/' + pkgName] = { main: '/bundles/' + pkgName + '.umd.js', defaultExtension: 'js' };
     }
     // Most environments should use UMD; some (Karma) need the individual index files
     var setPackageConfig = System.packageWithIndex ? packIndex : packUmd;

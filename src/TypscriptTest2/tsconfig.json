@@ -1,7 +1,7 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
-    "watch": true,
+    //"watch": true, //not sure why this throws errors. 
     "module": "system",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,

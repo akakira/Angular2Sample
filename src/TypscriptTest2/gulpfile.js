@@ -25,7 +25,8 @@ var paths = {
 };
 
 gulp.task("clean:js", function (cb) {
-    rimraf("./wwwroot/js/**/*.min.js", cb);
+    return gulp.src(["./wwwroot/js/**/*.min.js","./wwwroot/js/apps/**/*.js"])
+    .pipe(rimraf());    
 });
 
 gulp.task("clean:css", function (cb) {
@@ -44,12 +45,10 @@ gulp.task("min:js", function () {
 
 //only do this if you want to keep your typescript in a separate folder from the compiled javascript at runtime.
 gulp.task("firstapp:min", function () {
-    return gulp.src([paths.tsapps + "FirstApp/**/*.js", "!" + paths.tsapps + "FirstApp/systemjs.config.js"], { base: "." })
+    return gulp.src([paths.tsapps + "FirstApp/*.js", "!" + paths.tsapps + "FirstApp/systemjs.config.js"])
       .pipe(debug({ title: "First App" }))
-      .pipe(concat("FirstApp/app.min.js"))
-      .pipe(debug({ title: "First App Concat" }))
       .pipe(uglify())
-      .pipe(gulp.dest("./wwwroot/js/apps")) 
+      .pipe(gulp.dest(paths.tsappsmin+"FirstApp")) 
 });
 
 gulp.task("firstapp:mincss", function () {
@@ -60,6 +59,8 @@ gulp.task("firstapp:mincss", function () {
       .pipe(cssmin())
       .pipe(gulp.dest("./wwwroot/js/apps"))
 });
+
+
 
 gulp.task("firstapp:output", ["firstapp:min","firstapp:mincss"],
     function () {

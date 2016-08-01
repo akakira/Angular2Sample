@@ -3,7 +3,6 @@
 /// <reference path="../tsapps/firstapp/app.component.js" />
 /// <reference path="../tsapps/firstapp/main.js" />
 /// <reference path="../tsapps/firstapp/systemjs.config.js" />
-/// <reference path="js/apps/firstapp/systemjs.config.js" />
 /// <reference path="lib/bootstrap/dist/js/bootstrap.js" />
 /// <reference path="lib/jquery/dist/jquery.js" />
 /// <reference path="lib/jquery-validation/dist/jquery.validate.js" />
