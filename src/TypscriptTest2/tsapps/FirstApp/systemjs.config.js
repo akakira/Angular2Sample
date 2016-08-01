@@ -6,13 +6,13 @@
     // map tells the System loader where to look for things
     var map = {
         'app': 'app', // 'dist',
-        '@angular': 'node_modules/@angular',
-        'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
-        'rxjs': 'node_modules/rxjs'
+        'angular2': '/node_modules/angular2', //i would really recommend gulping distributable versions of these libraries and not publishing the full node folder, but this is an example. 
+        'angular2-in-memory-web-api': '/node_modules/angular2-in-memory-web-api',
+        'rxjs': '/node_modules/rxjs'
     };
     // packages tells the System loader how to load when no filename and/or no extension
     var packages = {
-        'app': { main: 'main.js', defaultExtension: 'js' },
+        'app': { main: 'app.min.js', defaultExtension: 'js' },
         'rxjs': { defaultExtension: 'js' },
         'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
     };

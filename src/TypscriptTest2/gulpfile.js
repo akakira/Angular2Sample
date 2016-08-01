@@ -42,20 +42,35 @@ gulp.task("min:js", function () {
       .pipe(gulp.dest("."));
 });
 
-//only do this if you want to keep your typescript in a separate folder from the compiled javascript at runtime. 
-//I suggest breaking this into a move, then minify function for more complex apps.
+//only do this if you want to keep your typescript in a separate folder from the compiled javascript at runtime.
 gulp.task("firstapp:min", function () {
-    return gulp.src([paths.tsapps + "FirstApp/**/*.js"], { base: "." })
+    return gulp.src([paths.tsapps + "FirstApp/**/*.js", "!" + paths.tsapps + "FirstApp/systemjs.config.js"], { base: "." })
       .pipe(debug({ title: "First App" }))
       .pipe(concat("FirstApp/app.min.js"))
       .pipe(debug({ title: "First App Concat" }))
       .pipe(uglify())
-      .pipe(gulp.dest("./wwwroot/js/apps"));
+      .pipe(gulp.dest("./wwwroot/js/apps")) 
 });
 
+gulp.task("firstapp:mincss", function () {
+    return gulp.src([paths.tsapps + "FirstApp/**/*.css"], { base: "." })
+      .pipe(debug({ title: "First App CSS" }))
+      .pipe(concat("FirstApp/app.min.css"))
+      .pipe(debug({ title: "First App Concat CSS" }))
+      .pipe(cssmin())
+      .pipe(gulp.dest("./wwwroot/js/apps"))
+});
+
+gulp.task("firstapp:output", ["firstapp:min","firstapp:mincss"],
+    function () {
+        return gulp.src([paths.tsapps + "FirstApp/systemjs.config.js"])
+        .pipe(gulp.dest("./wwwroot/js/apps/FirstApp/", {}))
+    });
+
+
 gulp.task("firstapp:watch", function () {
-    var watcher = gulp.watch([paths.tsapps + "FirstApp/**/*.js"], ['firstapp:min'])
+    var watcher = gulp.watch([paths.tsapps + "FirstApp/**/*.js"], ['firstapp:output'])
     watcher.on('change', function (event) { console.log('File ' + event.path + ' was ' + event.type + ', building firstapp'); })
 });
 
-gulp.task("min", ["min:js", "min:css","firstapp:min"]);
+gulp.task("min", ["min:js", "firstapp:output"]);
