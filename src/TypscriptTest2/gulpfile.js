@@ -1,12 +1,13 @@
 /// <binding BeforeBuild='min' Clean='clean, clean:js, clean:css' ProjectOpened='firstapp:watch' />
 //"use strict";
 
-var gulp = require("gulp"), 
+var gulp = require("gulp"),
   rimraf = require("rimraf"), //to remove files
-  concat = require("gulp-concat"), 
+  concat = require("gulp-concat"),
   cssmin = require("gulp-cssmin"),
   uglify = require("gulp-uglify"),
-  debug = require("gulp-debug"); //great to see whats getting uglified / concatenated
+  debug = require("gulp-debug"), //great to see whats getting uglified / concatenated
+  merge = require("merge-stream");
 var root = "./wwwroot/";
 var paths = {
     webroot: "./wwwroot/",
@@ -16,16 +17,17 @@ var paths = {
     minCss: root + "css/**/*.min.css",
     concatJsDest: root + "js/site.min.js",
     concatCssDest: root + "css/site.min.css",
-    nodeangular: "./node_modules/angular2/bundles/**", //refine this for your apps
-    angulardest: root + "lib/angular2/",
+    node: "./node_modules/",
+    libsdest: root + "lib/",
     tsapps: "./tsapps/",
     tsappsmin: root + "js/apps/",
     tsappscss: "./tsapps/*/*.css",
-    tsappsmincss: root + "js/apps/app.min.css"
+    tsappsmincss: root + "js/apps/app.min.css",
+    nodeLibsDest : root + "lib/node/"
 };
 
 gulp.task("clean:js", function (cb) {
-    return gulp.src(["./wwwroot/js/**/*.min.js","./wwwroot/js/apps/**/*.js"])
+    return gulp.src(["./wwwroot/js/**/*.min.js", "./wwwroot/js/apps/**/*.js","./wwwroot/libs/node/**/"])
     .pipe(rimraf());    
 });
 
@@ -60,14 +62,25 @@ gulp.task("firstapp:mincss", function () {
       .pipe(gulp.dest("./wwwroot/js/apps"))
 });
 
-
-
-gulp.task("firstapp:output", ["firstapp:min","firstapp:mincss"],
-    function () {
-        return gulp.src([paths.tsapps + "FirstApp/systemjs.config.js"])
-        .pipe(gulp.dest("./wwwroot/js/apps/FirstApp/", {}))
+gulp.task("copy:npmmodules", ["firstapp:min", "firstapp:mincss"],
+    function () { ///Feel free to strip these down to what you need, just doing this for example
+        return merge(gulp.src(paths.node + "core-js/client/**/").pipe(gulp.dest(paths.nodeLibsDest + "core-js/client/"),
+            gulp.src(paths.node + "zone.js/dist/**/").pipe(gulp.dest(paths.nodeLibsDest + "zone.js/dist/")),
+            gulp.src(paths.node + "reflect-metadata/**/").pipe(gulp.dest(paths.nodeLibsDest + "reflect-metadata/")),
+            gulp.src(paths.node + "@angular/**/").pipe(gulp.dest(paths.nodeLibsDest + "@angular/")),
+            gulp.src(paths.node + "angular2-in-memory-web-api/**/").pipe(gulp.dest(paths.nodeLibsDest + "angular2-in-memory-web-api/")),
+            gulp.src(paths.node + "rxjs/**/").pipe(gulp.dest(paths.nodeLibsDest + "rxjs/")),
+            gulp.src(paths.node + "systemjs/dist/**/").pipe(gulp.dest(paths.nodeLibsDest + "systemjs/dist/"))
+        )
+        )
     });
 
+gulp.task("firstapp:output", ["firstapp:min", "firstapp:mincss", "copy:npmmodules"],
+    function () {
+        return gulp.src([paths.tsapps + "FirstApp/systemjs.config.js"])
+        .pipe(debug({ title: "First App Output" }))
+        .pipe(gulp.dest("./wwwroot/js/apps/FirstApp/", {}))
+    });
 
 gulp.task("firstapp:watch", function () {
     var watcher = gulp.watch([paths.tsapps + "FirstApp/**/*.js"], ['firstapp:output'])
@@ -75,3 +88,4 @@ gulp.task("firstapp:watch", function () {
 });
 
 gulp.task("min", ["min:js", "firstapp:output"]);
+

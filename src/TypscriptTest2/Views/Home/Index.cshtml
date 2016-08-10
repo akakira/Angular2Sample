@@ -4,12 +4,20 @@
 
 @section head
 {
-    <!--these should be gulp filed or put in a cdn so as not to have to publish the node directory
-    <script src="/node_modules/core-js/client/shim.min.js"></script>
-    <script src="/node_modules/zone.js/dist/zone.js"></script>
-    <script src="/node_modules/reflect-metadata/Reflect.js"></script>
-    <script src="/node_modules/systemjs/dist/system.src.js"></script>-->
+    <!--these should be gulp filed or put in a cdn so as not to have to publish the node directory-->
+    <link type="text/css" href="~/js/apps/FirstApp/app.min.css" rel="stylesheet" />
+    
+    <script src="~/lib/node/core-js/client/shim.min.js"></script>
+    <script src="~/lib/node/zone.js/dist/zone.js"></script>
+    <script src="~/lib/node/reflect-metadata/Reflect.js"></script>
+    <script src="~/lib/node/systemjs/dist/system.src.js"></script>
+
+    <!--add my minified system config for the app-->
+    <script src="~/systemjs.config.js"></script>
+    <script>
+        SystemJS.import('app').catch(function (err) { console.error(err); });
+    </script>
 }
 
-<h1>One day I want to be a real SPA app!</h1>
+<my-app>One day I want to be a real SPA app!</my-app>
 
