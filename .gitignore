@@ -102,6 +102,7 @@ publish/
 #Packages Directory
 packages/
 wwwroot/lib/
+node_modules/
 
 # Windows Azure Build Output
 csx
